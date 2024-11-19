@@ -1,7 +1,9 @@
-import shutil, datetime, time, subprocess
-import platform
-import socket
-from concurrent.futures import ThreadPoolExecutor
+import shutil, datetime, time, subprocess, ipaddress, threading, socket
+from scapy.all import *
+from smbprotocol.connection import Connection
+from smbprotocol.session import Session
+from smbprotocol.tree import TreeConnect
+from smbprotocol.open import Open
 
 from all import *
 from exe import jiyu, files, page
@@ -126,54 +128,92 @@ def exe_2(choice):
 
 def exe_3(choice):
     if choice == "1":
+        def scan(ip, port):# 定义扫描函数
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(1)
+            result = sock.connect_ex((ip, port))
+            if result == 0:
+                print(rgb(255, 0, 0, f"端口{port}开放在{ip}上"))
+            sock.close()
+        def thread_scan(ip, ports):# 多线程扫描函数
+            threads = []
+            for port in ports:
+                t = threading.Thread(target=scan, args=(ip, port))
+                threads.append(t)
+                t.start()
+
+            for t in threads:
+                t.join()
+        try:# 获取用户输入
+            print(rgb(255, 255, 0, "退出这个功能只需要不写入数据即可"))
+            ip_address = input(rgb(255, 0, 0,"请输入要扫描的IP地址："))
+            ports_list = input(rgb(255, 0, 0, "1.扫描所有端口（很慢）\n2.扫描常用端口（较快）\n3.扫描指定端口（多个之间使用;分割）\n请选择："))
+            clear_console()
+            if ports_list == "1":
+                ports = range(0, 65535 + 1)
+                thread_scan(ip_address, ports)
+            elif ports_list == "2":
+                ports = [20, 21, 22, 23, 25, 53, 67, 68, 80, 110, 143, 443, 445, 3389, 8000, 8080]
+                thread_scan(ip_address, ports)
+            elif ports_list == "3":
+                ports = input(rgb(255, 0, 0,"请输入要扫描的端口：")).split(";")
+                ports = [int(port) for port in ports]
+                print(ports)
+                thread_scan(ip_address, ports)
+        except Exception as e:
+            clear_console()
+            print(rgb(255, 0, 0,"出现错误或者人为希望退出这个程序"))
+    elif choice == "2":
         clear_console()
+        print(rgb(255, 0, 0, files.get_port_info()))
+    elif choice == "3":
+        clear_console()
+        def ping(ip):# 定义扫描函数
+            result = subprocess.run(['ping', '-n', '1', '-w', '1000', str(ip)], capture_output=True, text=True)
+            if "TTL=" in result.stdout:
+                print(rgb(255, 0, 0, f"{ip} 存活"))
+        def thread_scan(network):# 多线程扫描函数
+            threads = []
+            for ip in network:
+                t = threading.Thread(target=ping, args=(ip,))
+                threads.append(t)
+                t.start()
+            for t in threads:
+                t.join()
+        try:# 获取用户输入
+            network_input = input(rgb(255, 0, 0, "请输入要扫描的网段（例如：192.168.1.0/24）："))
+            clear_console()
+            network = ipaddress.ip_network(network_input, strict=False)
+            thread_scan(network)
+        except Exception as e:
+            print(rgb(255, 0, 0, f"出现错误！！！请确认是否有写错！！！"))
+    elif choice == "4":
+        clear_console()
+        def scan_shared_folders(ip):# 定义扫描函数
+            try:
+                connection = Connection(uuid.uuid4(), str(ip))
+                connection.connect()
+                session = Session(connection, "guest", "")
+                session.connect()
+                print(rgb(255, 0, 0, f"{ip} 开启了共享文件夹"))
+            except Exception as e:
+                pass
+        def thread_scan(network):# 多线程扫描函数
+            threads = []
+            for ip in network:
+                t = threading.Thread(target=scan_shared_folders, args=(ip,))
+                threads.append(t)
+                t.start()
 
-        def get_local_ip_addresses():
-            # 获取当前机器的所有本地IP地址
-            hostname = socket.gethostname()
-            local_ips = socket.gethostbyname_ex(hostname)[2]
-            return local_ips
-
-        def ping(host):
-            # 返回True如果主机响应ping请求
-            param = '-n' if platform.system().lower() == 'windows' else '-c'
-            command = ['ping', param, '1', host]
-            return subprocess.call(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 0
-
-        def scan_ip(ip):
-            # 扫描单个IP地址
-            if ping(ip):
-                return ip
-            return None
-
-        def scan_network(network_prefix):
-            # 使用多线程扫描网络中的活动主机
-            active_hosts = []
-            with ThreadPoolExecutor(max_workers=100) as executor:
-                futures = [executor.submit(scan_ip, f"{network_prefix}.{i}") for i in range(1, 255)]
-                for future in futures:
-                    result = future.result()
-                    if result:
-                        active_hosts.append(result)
-            return active_hosts
-
-        # 获取所有本地IP地址
-        local_ips = get_local_ip_addresses()
-
-        # 显示本地IP地址并让用户选择网络前缀
-        print("找到的本地IP地址:")
-        for idx, ip in enumerate(local_ips):
-            print(f"{idx}. {ip}")
-
-        # 由于当前环境不支持用户输入，请手动选择一个IP地址
-        # 例如，选择第一个IP地址
-        lis = int(input("请输入希望扫描的网段>>>"))
-        selected_ip = local_ips[lis]
-        network_prefix = '.'.join(selected_ip.split('.')[:-1])
-
-        # 扫描选定的网络前缀
-        active_hosts = scan_network(network_prefix)
-
-        print(f"网络 {network_prefix}.x 中的活动主机:")
-        for host in active_hosts:
-            print(host)
+            for t in threads:
+                t.join()
+        try:# 获取用户输入
+            network_input = input(rgb(255, 0, 0, "请输入要扫描的网段（例如：192.168.1.0/24）："))
+            clear_console()
+            network = ipaddress.ip_network(network_input, strict=False)
+            thread_scan(network)
+        except Exception as e:
+            print(rgb(255, 0, 0, "扫描出错！！！"))
+    else:
+        clear_console()
+        print(rgb(255, 0, 0, "请输入正确的选项！"))

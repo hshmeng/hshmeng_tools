@@ -24,7 +24,7 @@ def page_1():
         print(rgb(255, 255, 0, "当前是管理员模式运行！能够正常使用所有功能"))
     else:
         print(rgb(255, 255, 0, "当前非管理员模式运行，建议以管理员模式下运行"))
-    print(rgb(0, 255, 0, "=====请选择一个选项（键入数字）v4.5====="))
+    print(rgb(0, 255, 0, "=====请选择一个选项（键入数字）v4.9====="))
     print(rgb_len(1, "1. [植物大战僵尸工具]"))
     print(rgb_len(2, "2. [极域电子教室工具]"))
     print(rgb_len(3, "3. [扫活工具]"))
@@ -41,7 +41,10 @@ def page_2(page):
         print(rgb_len(2, "2. 极域电子教室工具快捷键教学"))
         print(rgb_len(2, "3. 极域电子教室一键杀死（TK极域bat）"))
     elif page == "3":
-        print(rgb_len(3, "1. 扫描所有存活主机ip地址"))
+        print(rgb_len(3, "1. 扫描指定ip地址的端口号"))
+        print(rgb_len(3, "2. 常见端口及其服务内容"))
+        print(rgb_len(3, "3. 扫描指定ip地址网段存活主机"))
+        print(rgb_len(3, "4. 扫描所有开启共享文件夹的ip地址"))
 
 
 def pege_warning():

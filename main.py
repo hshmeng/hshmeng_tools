@@ -65,7 +65,10 @@ def main():
         choice = input(rgb(0, 255, 0, "请输入选项>>>"))
         exe_2(choice)
     if pages == "3":
-        print("没有做")
+        clear_console()
+        page.page_2(pages)
+        choice = input(rgb(0, 255, 0, "请输入选项>>>"))
+        exe_3(choice)
     if pages == "exit":
         clear_console()
         print(random_jump("我们正在入侵你的电脑！！！\n感受恐惧吧！！！"))
@@ -74,3 +77,5 @@ def main():
 while True:
     main()
 
+
+# pyinstaller -F -i qiqi.ico main.py
