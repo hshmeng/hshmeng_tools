@@ -29,24 +29,22 @@ def on_close_hotkey():
 
 keyboard.add_hotkey('alt+q', on_close_hotkey)
 
-def emoticons():
-    emoticons1 = """┬┴┬┌─  ●─┬─  │ ─┼─┐  ●├─┤○\n┴┬┴├┬  ┌─┼─  │◎ │ │  ○└┬┘●\n─┼─││  │ │  ││ ─┴─┴  ──┼──\n●│○││  ┴─┼─  │ ○  ●  ／│＼"""
-    emoticons2 = """█░█ █▀ █░█ █▀▄▀█ █▀▀ █▄░█ █▀▀\n█▀█ ▄█ █▀█ █░▀░█ ██▄ █░▀█ █▄█"""
-    emoticons3 = """█   █░░ █▀█ █░█ █▀▀   █▄█ █▀█ █░█\n█   █▄▄ █▄█ ▀▄▀ ██▄   ░█░ █▄█ █▄█"""
-    emoticons_list = [emoticons1, emoticons2, emoticons3]
-    selected_emoticon = random.choice(emoticons_list)
-    print()
-    print(rgb(0, 255, 0, selected_emoticon))
-    print()
-
-
 # 刷新颜色
 print(rgb(255, 0, 0, "键入回车进入程序>>>"))
 clear_console()
-# 刷新完成，一个小emoji
-emoticons()
-input(rgb(255, 0, 0, "键入回车进入程序>>>"))
-clear_console()
+c = input(rgb(255, 0, 0, "键入回车进入程序>>>"))
+if c == "123":
+    pass
+else:
+    ma_1()
+
+print("""=====公告=====
+原先的字体色彩过于丰富，不便于整理，故取消过于丰富的颜色
+v5.3更新内容：
+1. 上方显示电脑ip地址，本机名称
+2. 扫活工具新增一个功能
+3. 取消开屏小广告
+4. 增加作者信息栏目""")
 
 def main():
     page.page_1()
@@ -73,6 +71,11 @@ def main():
         clear_console()
         print(random_jump("我们正在入侵你的电脑！！！\n感受恐惧吧！！！"))
         exit()
+    if pages == "author":
+        clear_console()
+        author = """█░█ █▀ █░█ █▀▄▀█ █▀▀ █▄░█ █▀▀\n█▀█ ▄█ █▀█ █░▀░█ ██▄ █░▀█ █▄█"""
+        print(rgb(0, 255, 0, author))
+        input(rgb(0, 255, 0, "按回车键退出>>>"))
 
 while True:
     main()
