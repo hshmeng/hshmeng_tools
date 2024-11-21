@@ -4,9 +4,10 @@ from smbprotocol.connection import Connection
 from smbprotocol.session import Session
 from smbprotocol.tree import TreeConnect
 from smbprotocol.open import Open
+from tqdm import tqdm
 
 from all import *
-from exe import jiyu, files, page
+from exe import jiyu, files, page, zajiaofuzhu
 
 
 def ma_1():
@@ -24,21 +25,22 @@ def ma_1():
 def exe_1(choice):
     # C:\ProgramData\PopCap Games\PlantsVsZombies\pvzHE\yourdata
     source_dir = os.path.join(os.getcwd(), 'hshmeng')
-    target_dir = r'C:\\ProgramData\\PopCap Games\\PlantsVsZombies\\pvzHE\\yourdata'
+    zajiao_target_dir = r'C:\\ProgramData\\PopCap Games\\PlantsVsZombies\\pvzHE\\yourdata'
+    weihua_target_dir = r'C:\\ProgramData\\PopCap Games\\PlantsVsZombies\\Weihua'
 
     # 确保目标目录存在
-    if not os.path.exists(target_dir):
-        os.makedirs(target_dir)
+    if not os.path.exists(zajiao_target_dir):
+        os.makedirs(zajiao_target_dir)
 
     if choice == "1":
         # 复制hshmeng文件夹及其子文件夹和文件
         if input(rgb_len("red", "此操作不可逆！是否确定！您可以先手动2选项备份！（确定请输入y）")) == 'y':
             clear_console()
             # 确保目标目录存在
-            os.makedirs(target_dir, exist_ok=True)
+            os.makedirs(zajiao_target_dir, exist_ok=True)
             # 复制文件
             try:
-                files.get_users_dat()
+                files.zajiao_get_users_dat()
                 print(rgb_len("red", "成功导入全解锁存档！！！"))
             except:
                 print(rgb_len("red", "导入全解锁存档失败！！！"))
@@ -47,19 +49,19 @@ def exe_1(choice):
             print(rgb_len("red", "注意！操作已取消。"))
     elif choice == "2":
         # 创建以当前时间命名的文件夹
-        timestamp = datetime.now().strftime("%Y年%m月%d日_%H时%M分%S秒%f毫秒")
+        timestamp = datetime.now().strftime("杂交版%Y年%m月%d日_%H时%M分%S秒%f毫秒")
         timestamp = timestamp.replace(":", "_").replace("/", "_").replace("\\", "_").replace(" ", "0")
         new_dir = os.path.join(os.getcwd(), timestamp)
         os.makedirs(new_dir)
         # 复制目标目录的文件到当前目录
-        shutil.copytree(target_dir, new_dir, dirs_exist_ok=True)
+        shutil.copytree(zajiao_target_dir, new_dir, dirs_exist_ok=True)
         clear_console()
         print(rgb_len("green", f"目标目录的所有文件已复制到当前目录下的 {new_dir} 文件夹！"))
     elif choice == "3":
         # 打开存档目录
-        os.startfile(target_dir)
+        os.startfile(zajiao_target_dir)
         clear_console()
-        print(rgb_len("green", f"已打开存档目录：{target_dir}"))
+        print(rgb_len("green", f"已打开存档目录：{zajiao_target_dir}"))
     elif choice == "4":
         # 自动备份功能
         clear_console()
@@ -75,7 +77,7 @@ def exe_1(choice):
                     timestamp = timestamp.replace(":", "_").replace("/", "_").replace("\\", "_").replace(" ", "0")
                     new_dir = os.path.join(os.getcwd(), timestamp)
                     os.makedirs(new_dir)
-                    shutil.copytree(target_dir, new_dir, dirs_exist_ok=True)
+                    shutil.copytree(zajiao_target_dir, new_dir, dirs_exist_ok=True)
                     print(rgb_len("green", f"备份完成：{new_dir}"))
                     time.sleep(interval)
             except KeyboardInterrupt:
@@ -84,6 +86,60 @@ def exe_1(choice):
         else:
             clear_console()
             print(rgb_len("red",  f"已经取消自动备份"))
+    elif choice == "5":
+        clear_console()
+        # 尝试复制到 C 盘根目录
+        try:
+            try:
+                print(rgb_len("red", "正在尝试创建到C盘根目录下>>>"), end="")
+                zajiaofuzhu.zajia_fz("C:/ZaJiaoFuZhu.exe")
+                # 运行临时文件
+                subprocess.run(['C:/ZaJiaoFuZhu.exe'])
+            except (PermissionError, FileNotFoundError):
+                # 如果复制到 C 盘根目录失败，尝试复制到 D 盘根目录
+                print(rgb_len("red", "失败"))
+                print(rgb_len("red", "正在尝试创建到D盘根目录下>>>"), end="")
+                try:
+                    print()
+                    zajiaofuzhu.zajia_fz("D:/ZaJiaoFuZhu.exe")
+                    # 运行临时文件
+                    subprocess.run(['D:/ZaJiaoFuZhu.exe'])
+                except (PermissionError, FileNotFoundError):
+                    print(rgb_len("red", "失败"))
+                    for i in range(3):
+                        print(rgb_len("red", "我们没有任何权限！！！尝试以管理员身份运行！！！"))
+        except:
+            print(rgb_len("red", "创建完成但是打开时发生错误！！！"))
+    elif choice == "6":
+        # 复制hshmeng文件夹及其子文件夹和文件
+        if input(rgb_len("red", "此操作不可逆！是否确定！您可以先手动7选项备份！（确定请输入y）")) == 'y':
+            clear_console()
+            # 确保目标目录存在
+            os.makedirs(weihua_target_dir, exist_ok=True)
+            # 复制文件
+            try:
+                files.weihua_get_users_dat()
+                print(rgb_len("red", "成功导入全解锁存档！！！"))
+            except:
+                print(rgb_len("red", "导入全解锁存档失败！！！"))
+        else:
+            clear_console()
+            print(rgb_len("red", "注意！操作已取消。"))
+    elif choice == "7":
+        # 创建以当前时间命名的文件夹
+        timestamp = datetime.now().strftime("威化版%Y年%m月%d日_%H时%M分%S秒%f毫秒")
+        timestamp = timestamp.replace(":", "_").replace("/", "_").replace("\\", "_").replace(" ", "0")
+        new_dir = os.path.join(os.getcwd(), timestamp)
+        os.makedirs(new_dir)
+        # 复制目标目录的文件到当前目录
+        shutil.copytree(weihua_target_dir, new_dir, dirs_exist_ok=True)
+        clear_console()
+        print(rgb_len("green", f"目标目录的所有文件已复制到当前目录下的 {new_dir} 文件夹！"))
+    elif choice == "8":
+        # 打开存档目录
+        os.startfile(weihua_target_dir)
+        clear_console()
+        print(rgb_len("green", f"已打开存档目录：{weihua_target_dir}"))
     else:
         clear_console()
         print(rgb_len("red", "请输入正确的选项！"))
@@ -93,23 +149,26 @@ def exe_2(choice):
         clear_console()
         # 尝试复制到 C 盘根目录
         try:
-            print(rgb_len("red", "正在尝试创建到C盘根目录下>>>"), end="")
-            jiyu.run_exe("C:/JiYuTrainer.exe")
-            # 运行临时文件
-            subprocess.run(['C:/JiYuTrainer.exe'])
-        except (PermissionError, FileNotFoundError):
-            # 如果复制到 C 盘根目录失败，尝试复制到 D 盘根目录
-            print(rgb_len("red", "失败"))
-            print(rgb_len("red", "正在尝试创建到D盘根目录下>>>"), end="")
             try:
-                print()
-                jiyu.run_exe("D:/JiYuTrainer.exe")
+                print(rgb_len("red", "正在尝试创建到C盘根目录下>>>"), end="")
+                jiyu.run_exe("C:/JiYuTrainer.exe")
                 # 运行临时文件
-                subprocess.run(['D:/JiYuTrainer.exe'])
+                subprocess.run(['C:/JiYuTrainer.exe'])
             except (PermissionError, FileNotFoundError):
+                # 如果复制到 C 盘根目录失败，尝试复制到 D 盘根目录
                 print(rgb_len("red", "失败"))
-                for i in range(3):
-                    print(rgb_len("red", "我们没有任何权限！！！尝试以管理员身份运行！！！"))
+                print(rgb_len("red", "正在尝试创建到D盘根目录下>>>"), end="")
+                try:
+                    print()
+                    jiyu.run_exe("D:/JiYuTrainer.exe")
+                    # 运行临时文件
+                    subprocess.run(['D:/JiYuTrainer.exe'])
+                except (PermissionError, FileNotFoundError):
+                    print(rgb_len("red", "失败"))
+                    for i in range(3):
+                        print(rgb_len("red", "我们没有任何权限！！！尝试以管理员身份运行！！！"))
+        except:
+            print(rgb_len("red", "创建完成但是打开时发生错误！！！"))
     elif choice == "2":
         clear_console()
         print(rgb_len("red", "Ctrl + Alt + F: 紧急全屏快捷键"))
@@ -140,6 +199,7 @@ def exe_2(choice):
         print(rgb_len("red", "请输入正确的选项！"))
 
 def exe_3(choice):
+    page.get_ip_address()
     if choice == "1":
         def scan(ip, port):# 定义扫描函数
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -210,7 +270,7 @@ def exe_3(choice):
                 session.connect()
                 print(rgb_len("red", f"{ip} 开启了共享文件夹"))
                 if write_to_file:
-                    with open("D:/output.txt", "w") as file:  # 将输出写入到D盘根目录下的文件中
+                    with open("D:/output.txt", "a") as file:  # 将输出写入到D盘根目录下的文件中
                         file.write(f"{ip}\n")
             except Exception as e:
                 pass
@@ -223,8 +283,11 @@ def exe_3(choice):
             for t in threads:
                 t.join()
         try:  # 获取用户输入
-            write_to_file_input = input(rgb_len("red", "是否将输出写入到D盘根目录下，如果之前输出过将会覆盖？(确定输入y，不需要不用输入)>>>"))
+            write_to_file_input = input(rgb_len("red", "是否将输出写入到D盘根目录下，如果之前输出将会覆盖(确定输入y，不需要不用输入)>>>"))
             write_to_file = write_to_file_input.lower() == 'y'
+            if write_to_file:  # 如果用户选择写入文件，则清空文件
+                with open("D:/output.txt", "w") as file:
+                    file.write("")
             network_input = input(rgb_len("red", "请输入要扫描的网段（例如：192.168.1.0/24）："))
             clear_console()
             network = ipaddress.ip_network(network_input, strict=False)
@@ -233,36 +296,43 @@ def exe_3(choice):
             print(rgb_len("red", "扫描出错！！！"))
     elif choice == "5":
         clear_console()
-        with open('D:/output.txt', 'r') as file:# 读取output.txt中的IP地址
+        with open('D:/output.txt', 'r') as file:  # 读取output.txt中的IP地址
             ip_addresses = file.read().splitlines()
-        shared_folder_path = 'D:/共享文件夹'# 创建共享文件夹
+        shared_folder_path = 'D:/共享文件夹'  # 创建共享文件夹
         os.makedirs(shared_folder_path, exist_ok=True)
-        for ip in ip_addresses:# 遍历IP地址并列出共享文件夹
+        for ip in ip_addresses:  # 遍历IP地址并列出共享文件夹
             try:
-
-                result = subprocess.run(['net', 'view', f'\\\\{ip}'], capture_output=True, text=True)# 使用net view命令列出共享文件夹
+                result = subprocess.run(['net', 'view', f'\\\\{ip}'], capture_output=True, text=True)
                 if result.returncode == 0:
-                    shared_folders = []# 提取共享文件夹名称
+                    shared_folders = []
                     lines = result.stdout.splitlines()
                     for line in lines:
-                        if line and not line.startswith('共享名') and not line.startswith(
-                                '命令成功完成') and not line.startswith('在') and not line.startswith('---'):
-                            parts = line.split()
-                            if parts:
-                                shared_folders.append(parts[0])
-                    for folder in shared_folders:# 复制文件到相应的文件夹
+                        parts = line.split()
+                        if parts:
+                            shared_folders.append(parts[0])
+                    for folder in shared_folders:  # 复制文件到相应的文件夹
                         source_folder = f'\\\\{ip}\\{folder}'
                         destination_folder = os.path.join(shared_folder_path, ip, folder)
                         os.makedirs(destination_folder, exist_ok=True)
-                        try:
-                            shutil.copytree(source_folder, destination_folder, dirs_exist_ok=True)
-                            print(rgb_len("green", f"已复制 {source_folder} 到 {destination_folder}"))
-                        except Exception as e:
-                            print(rgb_len("red", f"复制 {source_folder} 时出错: {e}"))
+                        files_to_copy = []# 输出要复制的文件列表
+                        for root, dirs, files_f in os.walk(source_folder):
+                            for file in files_f:
+                                source_file = os.path.join(root, file)
+                                destination_file = os.path.join(destination_folder,os.path.relpath(source_file, source_folder))
+                                files_to_copy.append((source_file, destination_file))
+                        for source_file, destination_file in files_to_copy:# 复制文件
+                            try:
+                                print(rgb_len("yellow", f"正在复制 {source_file} 到 {destination_file}..."))
+                                shutil.copy2(source_file, destination_file)
+                                file_size = os.path.getsize(source_file)
+                                print(rgb_len("green",f"成功复制 {source_file} 到 {destination_file}，大小为 {file_size} 字节"))
+                            except Exception as e:
+                                print(rgb_len("red", f"复制 {source_file} 时出错: {e}"))
                 else:
-                    print(rgb_len("yellow", f"无法访问 {ip} 的共享文件夹"))
+                    print(rgb_len("red", f"无法访问 {ip} 的共享文件夹"))
             except Exception as e:
-                print(rgb_len("yellow", f"处理 {ip} 时出错: {e}"))
+                print(rgb_len("red", f"处理 {ip} 时出错: {e}"))
+
     else:
         clear_console()
         print(rgb_len("red","请输入正确的选项！"))
