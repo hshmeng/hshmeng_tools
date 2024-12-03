@@ -72,7 +72,7 @@ def page_2(page):
         print(rgb_len("green", "2. 常见端口及其服务内容"))
         print(rgb_len("green", "3. 扫描指定ip地址网段存活主机"))
         print(rgb_len("green", "4. 扫描所有开启共享文件夹的ip地址"))
-        print(rgb_len("green", "5. 尝试一键把所有共享文件复制到D盘根目录下"))
+        print(rgb_len("green", "5. 尝试一键把所有共享文件复制到D盘根目录下（需要运行4中的文件）"))
 
 
 

