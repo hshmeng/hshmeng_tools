@@ -49,7 +49,8 @@ def page_1():
     print(rgb_len("green", "1. [植物大战僵尸工具]"))
     print(rgb_len("green", "2. [极域电子教室工具]"))
     print(rgb_len("green", "3. [扫活工具]"))
-    print(rgb_len("green", "4. [游戏下载需要联网]（未开发）"))
+    print(rgb_len("green", "4. [共享操作]"))
+    print(rgb_len("green", "5. [本机管理工具]"))
 
 
 
@@ -68,12 +69,20 @@ def page_2(page):
         print(rgb_len("green", "2. 极域电子教室工具快捷键教学"))
         print(rgb_len("green", "3. 极域电子教室一键杀死（TK极域bat）"))
     elif page == "3":
-        print(rgb_len("green", "1. 扫描指定ip地址的端口号"))
+        print(rgb_len("green", "1. 扫描指定ip地址开放的端口号"))
         print(rgb_len("green", "2. 常见端口及其服务内容"))
         print(rgb_len("green", "3. 扫描指定ip地址网段存活主机"))
-        print(rgb_len("green", "4. 扫描所有开启共享文件夹的ip地址"))
-        print(rgb_len("green", "5. 尝试一键把所有共享文件复制到D盘根目录下（需要运行4中的文件）"))
-
+    elif page == "4":
+        print(rgb_len("green", "1. 扫描所有开启共享文件夹的ip地址"))
+        print(rgb_len("green", "2. 尝试一键把所有共享文件复制到D盘根目录下"))
+        print(rgb_len("green", "3. 本机开放的共享文件夹"))
+        print(rgb_len("green", "4. 尝试一键关闭本机所有共享文件夹"))
+        print(rgb_len("green", "5. 备份所有共享文件夹目录"))
+        print(rgb_len("green", "6. 开启所有备份的共享文件夹目录"))
+    elif page == "5":
+        print(rgb_len("green", "1. 设备规格"))
+        print(rgb_len("green", "2. windows规格"))
+        print(rgb_len("green", "3. 设备管理器"))
 
 
 def pege_warning():

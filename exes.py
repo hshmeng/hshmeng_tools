@@ -1,10 +1,12 @@
-import shutil, datetime, time, subprocess, ipaddress, threading, socket
+import shutil, datetime, time, ipaddress, threading, socket
 from scapy.all import *
 from smbprotocol.connection import Connection
 from smbprotocol.session import Session
 from smbprotocol.tree import TreeConnect
 from smbprotocol.open import Open
 from tqdm import tqdm
+import webbrowser
+import platform, psutil, subprocess, ldap3
 
 from all import *
 from exe import jiyu, filess, page, zajiaofuzhu
@@ -199,7 +201,6 @@ def exe_2(choice):
         print(rgb_len("red", "请输入正确的选项！"))
 
 def exe_3(choice):
-    page.get_ip_address()
     if choice == "1":
         def scan(ip, port):# 定义扫描函数
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -260,7 +261,12 @@ def exe_3(choice):
             thread_scan(network)
         except Exception as e:
             print(rgb_len("red", f"出现错误！！！请确认是否有写错！！！"))
-    elif choice == "4":
+    else:
+        clear_console()
+        print(rgb_len("red","请输入正确的选项！"))
+
+def exe_4(choice):
+    if choice == "1":
         clear_console()
         def scan_shared_folders(ip, write_to_file):  # 定义扫描函数，增加write_to_file参数
             try:
@@ -294,21 +300,18 @@ def exe_3(choice):
             thread_scan(network, write_to_file)
         except Exception as e:
             print(rgb_len("red", "扫描出错！！！"))
-    elif choice == "5":
+    elif choice == "2":
         clear_console()
-        # 读取output.txt中的IP地址
-        with open('D:/output.txt', 'r') as file:
-            ip_addresses = file.read().splitlines()
-
-        # 创建共享文件夹
-        shared_folder_path = 'D:/共享文件夹'
+        try:# 读取output.txt中的IP地址
+            with open('D:/output.txt', 'r') as file:
+                ip_addresses = file.read().splitlines()
+        except:
+            print(rgb_len("red", "没有找到output.txt文件，请先执行4选项，或者查看是否有权限访问文件"))
+        shared_folder_path = 'D:/共享文件夹'# 创建共享文件夹
         os.makedirs(shared_folder_path, exist_ok=True)
-
-        # 遍历IP地址并列出共享文件夹
-        for ip in ip_addresses:
+        for ip in ip_addresses:# 遍历IP地址并列出共享文件夹
             try:
-                # 使用net view命令列出共享文件夹
-                result = subprocess.run(['net', 'view', f'\\\\{ip}'], capture_output=True, text=True)
+                result = subprocess.run(['net', 'view', f'\\\\{ip}'], capture_output=True, text=True)# 使用net view命令列出共享文件夹
                 if result.returncode == 0:
                     shared_folders = []
                     lines = result.stdout.splitlines()
@@ -323,15 +326,12 @@ def exe_3(choice):
                         destination_folder = os.path.join(shared_folder_path, ip, folder)
                         os.makedirs(destination_folder, exist_ok=True)
                         try:
-                            # 获取要复制的文件总数
-                            total_files = sum([len(files) for r, d, files in os.walk(source_folder)])
-                            # 显示复制进度条
-                            with tqdm(total=total_files, desc=f"正在复制 {source_folder}") as pbar:
+                            total_files = sum([len(files) for r, d, files in os.walk(source_folder)])# 获取要复制的文件总数
+                            with tqdm(total=total_files, desc=f"正在复制 {source_folder}") as pbar:# 显示复制进度条
                                 for root, dirs, files in os.walk(source_folder):
                                     for file in files:
                                         src_file = os.path.join(root, file)
-                                        dst_file = os.path.join(destination_folder,
-                                                                os.path.relpath(src_file, source_folder))
+                                        dst_file = os.path.join(destination_folder,os.path.relpath(src_file, source_folder))
                                         os.makedirs(os.path.dirname(dst_file), exist_ok=True)
                                         shutil.copy2(src_file, dst_file)
                                         pbar.update(1)
@@ -343,6 +343,174 @@ def exe_3(choice):
                     print(rgb_len("yellow", f"无法访问 {ip} 的共享文件夹"))
             except Exception as e:
                 print(rgb_len("red", f"处理 {ip} 时出错: {e}"))
+    elif choice == "3":
+        clear_console()
+        def list_shared_folders():
+            # 获取所有共享文件夹的列表
+            shared_folders = os.popen('net share').read().splitlines()
+
+            # 打印共享文件夹列表
+            for line in shared_folders:
+                if line and not line.startswith('Share name') and not line.startswith('---'):
+                    print(rgb_len("red", line))
+
+        # 执行函数打印所有共享文件夹
+        list_shared_folders()
+    elif choice == "4":
+        clear_console()
+        a = input(rgb_len("red","注意！！！该操作将会删除所有共享文件夹信息！！！确认输入y>>>"))
+        def close_all_shared_folders():
+            # 获取所有共享文件夹的列表
+            shared_folders = os.popen('net share').read().splitlines()
+            shared_paths = []
+            # 遍历列表并关闭每个共享文件夹
+            for line in shared_folders:
+                if line and not line.startswith('Share name') and not line.startswith('---'):
+                    share_name = line.split()[0]
+                    share_path = line.split()[-1]
+                    shared_paths.append(share_path)
+                    not_kill = ["C$", "D$", "IPC$", "ADMIN$"]
+                    if share_name not in not_kill:
+                        try:
+                            subprocess.run(f'net share {share_name} /delete', shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+                            print(rgb_len("green", f'成功关闭共享文件夹 {share_name}'))
+                        except subprocess.CalledProcessError:
+                            print(rgb_len("red", f'关闭共享文件夹 {share_name} 失败'))
+                    else:
+                        print(rgb_len("yellow", f"排除共享文件夹 {share_name}"))
+        try:
+            if a == "y":
+                close_all_shared_folders()
+        except:
+            for _ in range(3):
+                print(rgb_len("red","出现错误，请检查是否有权限执行！！！"))
+    elif choice == "5":
+        clear_console()
+        def write_shared_folders_to_file():
+            # 获取所有共享文件夹的列表
+            shared_folders = os.popen('net share').read().splitlines()
+            shared_paths = []
+            # 遍历列表并获取每个共享文件夹的目录
+            for line in shared_folders:
+                if line and not line.startswith('Share name') and not line.startswith('---'):
+                    parts = line.split()
+                    if len(parts) > 1:
+                        not_use = ["共享名", "C$", "D$", "IPC$", "ADMIN$"]
+                        for num in range(len(parts)):
+                            if parts[num] in not_use:
+                                print(rgb_len("red",f"排除共享信息 {parts}"))
+                                break
+                        else:
+                            share_path = parts[-1]
+                            print(rgb_len("green", f"记录的共享信息 {share_path}"))
+                            shared_paths.append(share_path)
+            # 将所有共享目录位置写入D盘下的share.txt，并指定编码为utf-8
+            with open('D:/share.txt', 'w', encoding='utf-8') as f:
+                for path in shared_paths:
+                    f.write(path + '\n')
+
+        write_shared_folders_to_file()
+    elif choice == "6":
+        clear_console()
+        # 定义share.txt文件的路径
+        file_path = 'D:\\share.txt'
+        # 开启共享文件夹的函数
+        def enable_sharing(folder_path):
+            # 开启共享的命令
+            command = f'net share \"{os.path.basename(folder_path)}\"=\"{folder_path}\" /grant:everyone,FULL'
+            result = subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            if result.returncode == 0:
+                print(rgb_len("green", f'共享已开启: {folder_path}'))
+            else:
+                print(rgb_len("red", f'开启共享失败: {folder_path} ，请检查是否有权限'))
+        # 读取share.txt文件的内容，使用utf-8编码
+        with open(file_path, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+        # 为文件中列出的每个文件夹开启共享
+        for line in lines:
+            folder_path = line.strip()
+            if os.path.exists(folder_path):
+                enable_sharing(folder_path)
+            else:
+                print(rgb_len("yellow", f'文件夹不存在: {folder_path}'))
+    else:
+        clear_console()
+        print(rgb_len("red","请输入正确的选项！"))
+
+def exe_5(choice):
+    if choice == "1":
+        clear_console()
+        def get_device_specs():
+            specs = {
+                "设备名称": platform.node(),
+                "处理器": platform.processor(),
+                "机带 RAM": f"{psutil.virtual_memory().total / (1024 ** 3):.1f} GB ({psutil.virtual_memory().available / (1024 ** 3):.1f} GB 可用)",
+                "设备 ID": str(uuid.UUID(int=uuid.getnode())),
+                "系统类型": f"{platform.architecture()[0]} 位操作系统, 基于 {platform.machine()} 的处理器"
+            }
+            return specs
+        device_specs = get_device_specs()
+        for key, value in device_specs.items():
+                print(rgb_len("red",f"{key:<10}{value:<10}"))
+    elif choice == "2":
+        clear_console()
+        def get_windows_specs():
+            try:
+                # 获取Windows版本信息
+                version = subprocess.run(['powershell', '-Command', '(Get-WmiObject -Class Win32_OperatingSystem).Caption'],capture_output=True, text=True).stdout.strip()
+                version_number = subprocess.run(['powershell', '-Command', '(Get-WmiObject -Class Win32_OperatingSystem).Version'],capture_output=True, text=True).stdout.strip()
+                install_date = subprocess.run(['powershell', '-Command', '(Get-WmiObject -Class Win32_OperatingSystem).InstallDate'],capture_output=True, text=True).stdout.strip()
+                os_build = subprocess.run(['powershell', '-Command', '(Get-WmiObject -Class Win32_OperatingSystem).BuildNumber'],capture_output=True, text=True).stdout.strip()
+                serial_number = subprocess.run(['powershell', '-Command', '(Get-WmiObject -Class Win32_BIOS).SerialNumber'], capture_output=True,text=True).stdout.strip()
+                # 格式化安装日期
+                install_date_formatted = f"{install_date[:4]}/{install_date[4:6]}/{install_date[6:8]}"
+            except Exception as e:
+                return f"Error retrieving Windows specs: {e}"
+            specs = {
+                "版本": version,
+                "版本号": version_number,
+                "安装日期": install_date_formatted,
+                "操作系统版本": os_build,
+                "序列号": serial_number,
+            }
+            return specs
+        windows_specs = get_windows_specs()
+        if isinstance(windows_specs, dict):
+            for key, value in windows_specs.items():
+                print(rgb_len("red",f"{key:<10}{value:<10}"))
+        else:
+            print(rgb_len("red",windows_specs))
+    elif choice == "3":
+        clear_console()
+        def get_device_manager_devices():
+            try:
+                # 使用powershell命令获取设备管理器中的所有设备
+                result = subprocess.run(['powershell', '-Command', 'Get-PnpDevice | Select-Object -Property Class, FriendlyName'], capture_output=True, text=True)
+                devices = result.stdout.strip().split('\n')
+            except Exception as e:
+                devices = [f"Error retrieving devices: {e}"]
+            return devices
+
+        def group_devices_by_class(devices):
+            device_dict = {}
+            for device in devices[2:]:  # 跳过标题行
+                if device.strip():
+                    parts = device.split(None, 1)
+                    if len(parts) == 2:
+                        device_class, friendly_name = parts
+                        if device_class not in device_dict:
+                            device_dict[device_class] = []
+                        device_dict[device_class].append(friendly_name)
+            return device_dict
+
+        devices = get_device_manager_devices()
+        grouped_devices = group_devices_by_class(devices)
+
+        for device_class, friendly_names in grouped_devices.items():
+            print(rgb_len("red",f"{device_class}:"))
+            for name in friendly_names:
+                print(rgb_len("yellow",f"  - {name}"))
+            print()
     else:
         clear_console()
         print(rgb_len("red","请输入正确的选项！"))
