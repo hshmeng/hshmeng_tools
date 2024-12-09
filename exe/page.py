@@ -46,7 +46,6 @@ def page_1():
     get_ip_address()
     get_mac_address()
     print(rgb_len("purple", "=====请选择一个选项（键入数字）v5.3====="))
-    print(rgb_len("green", "1. [植物大战僵尸工具]"))
     print(rgb_len("green", "2. [极域电子教室工具]"))
     print(rgb_len("green", "3. [扫活工具]"))
     print(rgb_len("green", "4. [共享操作]"))
@@ -55,16 +54,7 @@ def page_1():
 
 
 def page_2(page):
-    if page == "1":
-        print(rgb_len("green", "1. 【植物大战僵尸杂交版pvzHE】导入全解锁存档（目前为：v2.6.1存档）"))
-        print(rgb_len("green", "2. 【植物大战僵尸杂交版pvzHE】将当前游戏存档备份"))
-        print(rgb_len("green", "3. 【植物大战僵尸杂交版pvzHE】打开当前游戏存档目录"))
-        print(rgb_len("green", "4. 【植物大战僵尸杂交版pvzHE】存档自动备份（需要输入备份间隔时间）"))
-        print(rgb_len("green", "5. 【植物大战僵尸杂交版pvzHE】外挂程序一键启动（外挂版本：23.52）"))
-        print(rgb_len("green", "6. 【植物大战僵尸威化版Weihua】导入全解锁存档"))
-        print(rgb_len("green", "7. 【植物大战僵尸威化版Weihua】将当前游戏存档备份"))
-        print(rgb_len("green", "8. 【植物大战僵尸威化版Weihua】打开存档目录"))
-    elif page == "2":
+    if page == "2":
         print(rgb_len("green", "1. 极域电子教室工具（JiYuTrainer.exe）"))
         print(rgb_len("green", "2. 极域电子教室工具快捷键教学"))
         print(rgb_len("green", "3. 极域电子教室一键杀死（TK极域bat）"))
@@ -88,5 +78,6 @@ def page_2(page):
 def pege_warning():
     print(rgb_len("Cyan", "exit. 退出程序"))
     print(rgb_len("Cyan", "author. 作者信息"))
+    print(rgb_len("Cyan", "del. 查看废弃的功能"))
     print(rgb_len("red", "此程序可以后台运行，按住键盘上Alt+Q组合键，自动关闭植物大战僵尸程序和本程序"))
     print(rgb_len("red", "自动关闭后，游戏进度不会消失，请放心使用（进度丢了没有售后）"))

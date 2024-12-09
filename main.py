@@ -5,6 +5,44 @@ import win32gui
 import win32con
 from exes import *
 
+if_caidan = 0
+
+def caidan():
+    # 获取当前窗口的句柄
+    hwnd = win32gui.GetForegroundWindow()
+
+    # 定义按键序列检测函数
+    def check_sequence(sequence, input_sequence):
+        return sequence == input_sequence[-len(sequence):]
+
+    # 处理按键事件的函数
+    def handle_key_press():
+        sequence = ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right']
+        input_sequence = []
+
+        while True:
+            if ctypes.windll.user32.GetAsyncKeyState(win32con.VK_UP):
+                input_sequence.append('up')
+            elif ctypes.windll.user32.GetAsyncKeyState(win32con.VK_DOWN):
+                input_sequence.append('down')
+            elif ctypes.windll.user32.GetAsyncKeyState(win32con.VK_LEFT):
+                input_sequence.append('left')
+            elif ctypes.windll.user32.GetAsyncKeyState(win32con.VK_RIGHT):
+                input_sequence.append('right')
+
+            # 检查按键序列
+            if check_sequence(sequence, input_sequence):
+                if_caidan = 1
+                print("列表似乎发生了变化")
+                input_sequence = []  # 重置输入序列
+
+            time.sleep(0.1)  # 添加延迟以避免高CPU使用率
+
+    # 开始处理按键事件
+    handle_key_press()
+
+caidan()
+
 def is_admin():
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
@@ -38,28 +76,20 @@ c = input(rgb(255, 0, 0, "键入回车进入程序>>>"))
 
 print("""=====公告=====
 原先的字体色彩过于丰富，不便于整理，故取消过于丰富的颜色
-v6.8更新内容：
-NEW：新的分类“共享操作”
-1.更新了 本机信息工具>设备规格
-2.更新了 本机信息工具>windows规格
-3.更新了 本机信息工具>设备管理器
-4.更新了 共享操作>本机开放的共享文件夹
-5.更新了 共享操作>尝试一键关闭本机所有共享文件夹
-6.更新了 共享操作>备份所有共享文件夹目录
-7.更新了 共享操作>开启所有备份的共享文件夹目录
-8.修复了 共享操作>尝试一键关闭本机所有共享文件夹 会把关键配置删除的错误
+v7.0更新内容：
+WARN:我们删除了“植物大战僵尸工具”
+1. 更新了废弃的功能检索功能
+2. 更新了一个彩蛋！彩蛋！彩蛋！彩蛋！彩蛋！（提示：最经典的作弊代码）
 """)
 
 def main():
     page.page_1()
     page.pege_warning()
-    pages = input(rgb(0, 255, 0, "1输入选项>>>"))
+    pages = input(rgb(0, 255, 0, "输入选项>>>"))
     def ys():
-        exe_list = ["1", "2", "3", "4", "5"]
+        exe_list = ["2", "3", "4", "5"]
         if pages in exe_list:
             choice = input(rgb(0, 255, 0, "请输入选项>>>"))
-        if pages == "1":
-            exe_1(choice)
         if pages == "2":
             exe_2(choice)
         if pages == "3":
@@ -70,9 +100,9 @@ def main():
             exe_5(choice)
     clear_console()
     page.page_2(pages)
+    if if_caidan == 1:
+        print(rgb_len("Cyan", "【彩蛋】李猛烧香（输入：李猛烧香，体验彩蛋）"))
     ys()
-
-
     if pages == "exit":
         clear_console()
         print(random_jump("我们正在入侵你的电脑！！！\n感受恐惧吧！！！"))
@@ -80,8 +110,23 @@ def main():
     if pages == "author":
         clear_console()
         author = """█░█ █▀ █░█ █▀▄▀█ █▀▀ █▄░█ █▀▀\n█▀█ ▄█ █▀█ █░▀░█ ██▄ █░▀█ █▄█"""
-        print(rgb(0, 255, 0, author))
-        input(rgb(0, 255, 0, "按回车键退出>>>"))
+        print(rgb_len("green", author))
+        input(rgb_len("green", "按回车键退出>>>"))
+    if pages == "del":
+        clear_console()
+        print(rgb_len("green", "废弃的功能："))
+        print(rgb_len("purple", "【植物大战僵尸杂交版pvzHE】导入全解锁存档（目前为：v2.6.1存档）"),rgb_len("red","存在版本：v3_1 v4_5 v4_9 v5_4 v6_0 v6_6 v6_7 v6_8"))
+        print(rgb_len("purple", "【植物大战僵尸杂交版pvzHE】将当前游戏存档备份"),rgb_len("red", "存在版本：v3_1 v4_5 v4_9 v5_4 v6_0 v6_6 v6_7 v6_8"))
+        print(rgb_len("purple", "【植物大战僵尸杂交版pvzHE】打开当前游戏存档目录"),rgb_len("red", "存在版本：v3_1 v4_5 v4_9 v5_4 v6_0 v6_6 v6_7 v6_8"))
+        print(rgb_len("purple", "【植物大战僵尸杂交版pvzHE】存档自动备份（需要输入备份间隔时间）"),rgb_len("red", "存在版本：v3_1 v4_5 v4_9 v5_4 v6_0 v6_6 v6_7 v6_8"))
+        print(rgb_len("purple", "【植物大战僵尸杂交版pvzHE】外挂程序一键启动（外挂版本：23.52）"),rgb_len("red", "存在版本：v6_0 v6_6 v6_7 v6_8"))
+        print(rgb_len("purple", "【植物大战僵尸威化版Weihua】导入全解锁存档"),rgb_len("red", "存在版本：v6_0 v6_6 v6_7 v6_8"))
+        print(rgb_len("purple", "【植物大战僵尸威化版Weihua】将当前游戏存档备份"),rgb_len("red", "存在版本：v6_0 v6_6 v6_7 v6_8"))
+        print(rgb_len("purple", "【植物大战僵尸威化版Weihua】打开存档目录"),rgb_len("red", "存在版本：v6_0 v6_6 v6_7 v6_8"))
+    if pages == "李猛烧香":
+        for _ in range(3):
+            print(rgb_len("red", "警告！！！你确定要执行李猛烧香吗！！！该操作不可逆转！！！（此功能不会对电脑造成危害，但是会让电脑变的很智）"))
+
 
 while True:
     main()

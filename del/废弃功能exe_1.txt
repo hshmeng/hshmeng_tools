@@ -1,0 +1,134 @@
+print(rgb_len("green", "1. [植物大战僵尸工具]"))
+
+if page == "1":
+    print(rgb_len("green", "1. 【植物大战僵尸杂交版pvzHE】导入全解锁存档（目前为：v2.6.1存档）"))
+    print(rgb_len("green", "2. 【植物大战僵尸杂交版pvzHE】将当前游戏存档备份"))
+    print(rgb_len("green", "3. 【植物大战僵尸杂交版pvzHE】打开当前游戏存档目录"))
+    print(rgb_len("green", "4. 【植物大战僵尸杂交版pvzHE】存档自动备份（需要输入备份间隔时间）"))
+    print(rgb_len("green", "5. 【植物大战僵尸杂交版pvzHE】外挂程序一键启动（外挂版本：23.52）"))
+    print(rgb_len("green", "6. 【植物大战僵尸威化版Weihua】导入全解锁存档"))
+    print(rgb_len("green", "7. 【植物大战僵尸威化版Weihua】将当前游戏存档备份"))
+    print(rgb_len("green", "8. 【植物大战僵尸威化版Weihua】打开存档目录"))
+
+def exe_1(choice):
+    # C:\ProgramData\PopCap Games\PlantsVsZombies\pvzHE\yourdata
+    source_dir = os.path.join(os.getcwd(), 'hshmeng')
+    zajiao_target_dir = r'C:\\ProgramData\\PopCap Games\\PlantsVsZombies\\pvzHE\\yourdata'
+    weihua_target_dir = r'C:\\ProgramData\\PopCap Games\\PlantsVsZombies\\Weihua'
+
+    # 确保目标目录存在
+    if not os.path.exists(zajiao_target_dir):
+        os.makedirs(zajiao_target_dir)
+
+    if choice == "1":
+        # 复制hshmeng文件夹及其子文件夹和文件
+        if input(rgb_len("red", "此操作不可逆！是否确定！您可以先手动2选项备份！（确定请输入y）")) == 'y':
+            clear_console()
+            # 确保目标目录存在
+            os.makedirs(zajiao_target_dir, exist_ok=True)
+            # 复制文件
+            try:
+                filess.zajiao_get_users_dat()
+                print(rgb_len("red", "成功导入全解锁存档！！！"))
+            except:
+                print(rgb_len("red", "导入全解锁存档失败！！！"))
+        else:
+            clear_console()
+            print(rgb_len("red", "注意！操作已取消。"))
+    elif choice == "2":
+        # 创建以当前时间命名的文件夹
+        timestamp = datetime.now().strftime("杂交版%Y年%m月%d日_%H时%M分%S秒%f毫秒")
+        timestamp = timestamp.replace(":", "_").replace("/", "_").replace("\\", "_").replace(" ", "0")
+        new_dir = os.path.join(os.getcwd(), timestamp)
+        os.makedirs(new_dir)
+        # 复制目标目录的文件到当前目录
+        shutil.copytree(zajiao_target_dir, new_dir, dirs_exist_ok=True)
+        clear_console()
+        print(rgb_len("green", f"目标目录的所有文件已复制到当前目录下的 {new_dir} 文件夹！"))
+    elif choice == "3":
+        # 打开存档目录
+        os.startfile(zajiao_target_dir)
+        clear_console()
+        print(rgb_len("green", f"已打开存档目录：{zajiao_target_dir}"))
+    elif choice == "4":
+        # 自动备份功能
+        clear_console()
+        print(rgb_len("red", "注意！启用此功能后，其它功能无法使用，只能通过关闭程序取消备份"))
+        print(rgb_len("red",  "不会影响Alt+Q快捷关闭功能"))
+        if input(rgb_len("red", "是否确认开启功能请输入（确定请输入y）>>>")) == 'y':
+            interval = int(input(rgb_len("red",  "请输入备份间隔时间（秒）>>>")))
+            clear_console()
+            print(rgb_len("green", f"自动备份已启动，每 {interval} 秒备份一次。"))
+            try:
+                while True:
+                    timestamp = datetime.datetime.now().strftime("%Y年%m月%d日_%H时%M分%S秒%f毫秒")
+                    timestamp = timestamp.replace(":", "_").replace("/", "_").replace("\\", "_").replace(" ", "0")
+                    new_dir = os.path.join(os.getcwd(), timestamp)
+                    os.makedirs(new_dir)
+                    shutil.copytree(zajiao_target_dir, new_dir, dirs_exist_ok=True)
+                    print(rgb_len("green", f"备份完成：{new_dir}"))
+                    time.sleep(interval)
+            except KeyboardInterrupt:
+                clear_console()
+                print(rgb_len("red",  "自动备份已停止。"))
+        else:
+            clear_console()
+            print(rgb_len("red",  f"已经取消自动备份"))
+    elif choice == "5":
+        clear_console()
+        # 尝试复制到 C 盘根目录
+        try:
+            try:
+                print(rgb_len("red", "正在尝试创建到C盘根目录下>>>"), end="")
+                zajiaofuzhu.zajia_fz("C:/ZaJiaoFuZhu.exe")
+                # 运行临时文件
+                subprocess.run(['C:/ZaJiaoFuZhu.exe'])
+            except (PermissionError, FileNotFoundError):
+                # 如果复制到 C 盘根目录失败，尝试复制到 D 盘根目录
+                print(rgb_len("red", "失败"))
+                print(rgb_len("red", "正在尝试创建到D盘根目录下>>>"), end="")
+                try:
+                    print()
+                    zajiaofuzhu.zajia_fz("D:/ZaJiaoFuZhu.exe")
+                    # 运行临时文件
+                    subprocess.run(['D:/ZaJiaoFuZhu.exe'])
+                except (PermissionError, FileNotFoundError):
+                    print(rgb_len("red", "失败"))
+                    for i in range(3):
+                        print(rgb_len("red", "我们没有任何权限！！！尝试以管理员身份运行！！！"))
+        except:
+            print(rgb_len("red", "创建完成但是打开时发生错误！！！"))
+    elif choice == "6":
+        # 复制hshmeng文件夹及其子文件夹和文件
+        if input(rgb_len("red", "此操作不可逆！是否确定！您可以先手动7选项备份！（确定请输入y）")) == 'y':
+            clear_console()
+            # 确保目标目录存在
+            os.makedirs(weihua_target_dir, exist_ok=True)
+            # 复制文件
+            try:
+                filess.weihua_get_users_dat()
+                print(rgb_len("red", "成功导入全解锁存档！！！"))
+            except:
+                print(rgb_len("red", "导入全解锁存档失败！！！"))
+        else:
+            clear_console()
+            print(rgb_len("red", "注意！操作已取消。"))
+    elif choice == "7":
+        # 创建以当前时间命名的文件夹
+        timestamp = datetime.now().strftime("威化版%Y年%m月%d日_%H时%M分%S秒%f毫秒")
+        timestamp = timestamp.replace(":", "_").replace("/", "_").replace("\\", "_").replace(" ", "0")
+        new_dir = os.path.join(os.getcwd(), timestamp)
+        os.makedirs(new_dir)
+        # 复制目标目录的文件到当前目录
+        shutil.copytree(weihua_target_dir, new_dir, dirs_exist_ok=True)
+        clear_console()
+        print(rgb_len("green", f"目标目录的所有文件已复制到当前目录下的 {new_dir} 文件夹！"))
+    elif choice == "8":
+        # 打开存档目录
+        os.startfile(weihua_target_dir)
+        clear_console()
+        print(rgb_len("green", f"已打开存档目录：{weihua_target_dir}"))
+    else:
+        clear_console()
+        print(rgb_len("red", "请输入正确的选项！"))
+
