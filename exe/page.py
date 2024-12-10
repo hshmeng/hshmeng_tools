@@ -45,7 +45,8 @@ def page_1():
 
     get_ip_address()
     get_mac_address()
-    print(rgb_len("purple", "=====请选择一个选项（键入数字）v5.3====="))
+    print(rgb_len("purple", "=====请选择一个选项（键入数字）v7.0====="))
+    # print(rgb_len("green", "1. [植物大战僵尸工具]"))
     print(rgb_len("green", "2. [极域电子教室工具]"))
     print(rgb_len("green", "3. [扫活工具]"))
     print(rgb_len("green", "4. [共享操作]"))
@@ -79,5 +80,5 @@ def pege_warning():
     print(rgb_len("Cyan", "exit. 退出程序"))
     print(rgb_len("Cyan", "author. 作者信息"))
     print(rgb_len("Cyan", "del. 查看废弃的功能"))
-    print(rgb_len("red", "此程序可以后台运行，按住键盘上Alt+Q组合键，自动关闭植物大战僵尸程序和本程序"))
-    print(rgb_len("red", "自动关闭后，游戏进度不会消失，请放心使用（进度丢了没有售后）"))
+    print(rgb_len("red", "此程序可以后台运行，按住键盘上Alt+Q组合键，快捷关闭你配置的文件"))
+    print(rgb_len("red", "注意，配置文件在D盘根目录下的del.txt，一行一个需要关闭的程序，搜索方式*{}*"))

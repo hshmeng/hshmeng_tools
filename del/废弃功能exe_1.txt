@@ -1,15 +1,5 @@
 print(rgb_len("green", "1. [植物大战僵尸工具]"))
 
-if page == "1":
-    print(rgb_len("green", "1. 【植物大战僵尸杂交版pvzHE】导入全解锁存档（目前为：v2.6.1存档）"))
-    print(rgb_len("green", "2. 【植物大战僵尸杂交版pvzHE】将当前游戏存档备份"))
-    print(rgb_len("green", "3. 【植物大战僵尸杂交版pvzHE】打开当前游戏存档目录"))
-    print(rgb_len("green", "4. 【植物大战僵尸杂交版pvzHE】存档自动备份（需要输入备份间隔时间）"))
-    print(rgb_len("green", "5. 【植物大战僵尸杂交版pvzHE】外挂程序一键启动（外挂版本：23.52）"))
-    print(rgb_len("green", "6. 【植物大战僵尸威化版Weihua】导入全解锁存档"))
-    print(rgb_len("green", "7. 【植物大战僵尸威化版Weihua】将当前游戏存档备份"))
-    print(rgb_len("green", "8. 【植物大战僵尸威化版Weihua】打开存档目录"))
-
 def exe_1(choice):
     # C:\ProgramData\PopCap Games\PlantsVsZombies\pvzHE\yourdata
     source_dir = os.path.join(os.getcwd(), 'hshmeng')
@@ -131,4 +121,3 @@ def exe_1(choice):
     else:
         clear_console()
         print(rgb_len("red", "请输入正确的选项！"))
-

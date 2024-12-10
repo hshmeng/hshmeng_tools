@@ -1,15 +1,12 @@
-import shutil, datetime, time, ipaddress, threading, socket
+import ipaddress
+import win32com.client
 from scapy.all import *
 from smbprotocol.connection import Connection
 from smbprotocol.session import Session
-from smbprotocol.tree import TreeConnect
-from smbprotocol.open import Open
 from tqdm import tqdm
-import webbrowser
-import platform, psutil, subprocess, ldap3
-
+import platform, psutil, subprocess
 from all import *
-from exe import jiyu, filess, page, zajiaofuzhu
+from exe import jiyu, filess, qiqi_put_pp
 
 
 # def ma_1():
@@ -23,6 +20,12 @@ from exe import jiyu, filess, page, zajiaofuzhu
 #         for letter in string.ascii_uppercase:
 #             command = f'net share {letter}={letter}:\\ /grant:hacker,full'
 #             subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+def the_flies_pro(file_namess=None,output_namess=None):
+    file_namess_new = bytes.fromhex(file_namess)
+    with open(output_namess, 'wb') as new_img_file:
+        new_img_file.write(file_namess_new)
+
 
 
 def exe_2(choice):
@@ -393,3 +396,29 @@ def exe_5(choice):
     else:
         clear_console()
         print(rgb_len("red","请输入正确的选项！"))
+
+def lm_shaoxiang():
+    print("正在获取图片...")
+    qiqi_put_pp()
+    def tubiaotihuan():
+        # 新图标文件的路径
+        new_icon_path = "D:\\qiqi.ico"
+
+        # 获取桌面路径
+        desktop_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+
+        # 遍历桌面上的所有文件
+        for item in os.listdir(desktop_path):
+            item_path = os.path.join(desktop_path, item)
+
+            # 检查文件是否为快捷方式（.lnk文件）
+            if os.path.isfile(item_path) and item_path.endswith('.lnk'):
+                # 创建Shell对象
+                shell = win32com.client.Dispatch("WScript.Shell")
+                # 加载快捷方式
+                shortcut = shell.CreateShortcut(item_path)
+                # 替换图标
+                shortcut.IconLocation = new_icon_path
+                # 保存快捷方式
+                shortcut.save()
+    tubiaotihuan()
