@@ -1,0 +1,14 @@
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+/资源/
+/dist/
+__pycache__
+/build/
+*.spec
+hshmeng_tools*
