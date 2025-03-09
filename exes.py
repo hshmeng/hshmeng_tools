@@ -124,11 +124,13 @@ def exe_3(choice):
         print(rgb_len("red", filess.get_port_info()))
     elif choice == "3":
         clear_console()
-        def ping(ip):# 定义扫描函数
+
+        def ping(ip):  # 定义扫描函数
             result = subprocess.run(['ping', '-n', '1', '-w', '1000', str(ip)], capture_output=True, text=True)
             if "TTL=" in result.stdout:
                 print(rgb_len("red", f"{ip} 存活"))
-        def thread_scan(network):# 多线程扫描函数
+
+        def thread_scan(network):  # 多线程扫描函数
             threads = []
             for ip in network:
                 t = threading.Thread(target=ping, args=(ip,))
@@ -136,8 +138,15 @@ def exe_3(choice):
                 t.start()
             for t in threads:
                 t.join()
-        try:# 获取用户输入
-            network_input = input(rgb_len("red", "请输入要扫描的网段（例如：192.168.1.0/24）："))
+
+        try:  # 获取用户输入
+            network_input = input(rgb_len("red", "请输入要扫描的网段（例如：192.168.1.0 或 10.30.210.0）："))
+            if not network_input:  # 如果用户没有输入，则使用默认值
+                network_input = "192.168.1.0/24"
+            elif "/" not in network_input:  # 如果用户没有输入掩码，则自动添加 /24
+                network_input += "/24"
+                print(rgb_len("red", f"检测到未添加网段，默认：{network_input}"))
+
             clear_console()
             network = ipaddress.ip_network(network_input, strict=False)
             thread_scan(network)
@@ -150,6 +159,7 @@ def exe_3(choice):
 def exe_4(choice):
     if choice == "1":
         clear_console()
+
         def scan_shared_folders(ip, write_to_file):  # 定义扫描函数，增加write_to_file参数
             try:
                 connection = Connection(uuid.uuid4(), str(ip))
@@ -162,6 +172,7 @@ def exe_4(choice):
                         file.write(f"{ip}\n")
             except Exception as e:
                 pass
+
         def thread_scan(network, write_to_file):  # 多线程扫描函数，增加write_to_file参数
             threads = []
             for ip in network:
@@ -170,13 +181,22 @@ def exe_4(choice):
                 t.start()
             for t in threads:
                 t.join()
+
         try:  # 获取用户输入
-            write_to_file_input = input(rgb_len("red", "是否将输出写入到D盘根目录下，如果之前输出将会覆盖(确定输入y，不需要不用输入)>>>"))
+            write_to_file_input = input(
+                rgb_len("red", "是否将输出写入到D盘根目录下，如果之前输出将会覆盖(确定输入y，不需要不用输入)>>>"))
             write_to_file = write_to_file_input.lower() == 'y'
             if write_to_file:  # 如果用户选择写入文件，则清空文件
                 with open("D:/output.txt", "w") as file:
                     file.write("")
+
             network_input = input(rgb_len("red", "请输入要扫描的网段（例如：192.168.1.0/24）："))
+
+            # 如果用户输入中没有子网掩码，则自动添加 /24
+            if '/' not in network_input:
+                print(rgb_len("red", f"检测到未添加网段，默认：{network_input}"))
+                network_input += '/24'
+
             clear_console()
             network = ipaddress.ip_network(network_input, strict=False)
             thread_scan(network, write_to_file)
