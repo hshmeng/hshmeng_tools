@@ -11,4 +11,4 @@
 | v6.7 | [v6.7](https://github.com/hshmeng/hshmeng_tools/releases/tag/v6.7) | [v6.7下载](https://github.com/hshmeng/hshmeng_tools/releases/download/v6.7/hshmeng_tools_v6_7.exe) |
 | v6.8 | [v6.8](https://github.com/hshmeng/hshmeng_tools/releases/tag/v6.7) | [v6.8下载](https://github.com/hshmeng/hshmeng_tools/releases/download/v6.8/hshmeng_tools_v6_8.exe) |
 | v7.0 | [v7.0](https://github.com/hshmeng/hshmeng_tools/releases/tag/v7.0) | [v7.0下载](https://github.com/hshmeng/hshmeng_tools/releases/download/v7.0/hshmeng_tools_v7_0.exe) |
-| v7.0.1-beta | [v4.5](https://github.com/hshmeng/hshmeng_tools/releases/tag/v7.0.1-beta) | [v7.0.1-beta下载](https://github.com/hshmeng/hshmeng_tools/releases/download/v7.0.1-beta/hshmeng_tools_v7_0_1.beta.exe) |
+| v7.0.1-beta | [v7.0.1-beta](https://github.com/hshmeng/hshmeng_tools/releases/tag/v7.0.1-beta) | [v7.0.1-beta下载](https://github.com/hshmeng/hshmeng_tools/releases/download/v7.0.1-beta/hshmeng_tools_v7_0_1.beta.exe) |
