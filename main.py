@@ -5,6 +5,7 @@ import win32gui
 import win32con
 from exes import *
 from exe import page
+from exe import choujiang
 
 if_caidan = 0
 
@@ -98,8 +99,9 @@ c = input(rgb(255, 0, 0, "键入回车进入程序>>>"))
 
 print("""=====公告=====
 原先的字体色彩过于丰富，不便于整理，故取消过于丰富的颜色
-v7.0.1 beta更新内容：
+v7.1更新内容：
 1. 所有需要输入网段的内容在不输入网段的时候默认/24
+2. 添加了抽奖功能
 """)
 
 def main():
@@ -144,6 +146,11 @@ def main():
         print(rgb_len("purple", "【植物大战僵尸威化版Weihua】导入全解锁存档"),rgb_len("red", "存在版本：v6_0 v6_6 v6_7 v6_8"))
         print(rgb_len("purple", "【植物大战僵尸威化版Weihua】将当前游戏存档备份"),rgb_len("red", "存在版本：v6_0 v6_6 v6_7 v6_8"))
         print(rgb_len("purple", "【植物大战僵尸威化版Weihua】打开存档目录"),rgb_len("red", "存在版本：v6_0 v6_6 v6_7 v6_8"))
+    if pages == "cj":
+        clear_console()
+        print(rgb_len("green", "抽奖转盘用法："))
+        print(rgb_len("green", "导入的txt文件，一行一个内容，注意，空的换行也会算进去"))
+        choujiang.cj_main()
     if pages == "李猛烧香":
         if if_caidan == 1 == 1:
             for _ in range(3):
