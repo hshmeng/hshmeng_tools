@@ -6,7 +6,7 @@ from smbprotocol.session import Session
 from tqdm import tqdm
 import platform, psutil, subprocess
 from all import *
-from exe import jiyu, filess, qiqi_put_pp
+from exe import jiyu, filess
 
 
 # def ma_1():
