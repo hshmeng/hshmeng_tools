@@ -1,5 +1,5 @@
-from network import NetworkManager
-from gui import ChatGUI
+from chat.network import NetworkManager
+from chat.gui import ChatGUI
 import tkinter as tk
 import random
 
@@ -14,7 +14,7 @@ def main():
     network_manager.start_connection_manager()
 
     root = tk.Tk()
-    root.iconbitmap('..\\qiqi.ico')
+    root.iconbitmap('qiqi.ico')
     app = ChatGUI(root, network_manager)
     app.gui_updater()
     root.mainloop()

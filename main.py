@@ -1,4 +1,3 @@
-import threading
 import keyboard
 import pygetwindow as gw
 import win32gui
@@ -6,7 +5,7 @@ import win32con
 from exes import *
 from exe import page
 from exe import choujiang
-from chat import chat_main
+import chat_main
 
 if_caidan = 0
 
