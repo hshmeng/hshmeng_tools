@@ -81,6 +81,6 @@ def pege_warning():
     print(rgb_len("Cyan", "author. 作者信息"))
     print(rgb_len("Cyan", "del. 查看废弃的功能"))
     print(rgb_len("Cyan", "cj. 随机转盘抽奖"))
-    print(rgb_len("Cyan", "chat. 随机转盘抽奖"))
+    print(rgb_len("Cyan", "chat. 聊天功能"))
     print(rgb_len("red", "此程序可以后台运行，按住键盘上Alt+Q组合键，快捷关闭你配置的文件"))
     print(rgb_len("red", "注意，配置文件在D盘根目录下的del.txt，一行一个需要关闭的程序，搜索方式*{}*"))
