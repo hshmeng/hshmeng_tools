@@ -101,7 +101,7 @@ print("""=====公告=====
 原先的字体色彩过于丰富，不便于整理，故取消过于丰富的颜色
 v8.0 更新公告：
 1.优化代码
-2.更新新功能（CHAT聊天，这是一个单独功能，不会基于hshmeng_tools运行，但会有联动）
+2.更新新功能（CHAT聊天，这是一个单独功能，可以不基于hshmeng_tools运行，但会与hshmeng_tools有联动）
 """)
 
 def main():
@@ -151,6 +151,11 @@ def main():
         print(rgb_len("green", "抽奖转盘用法："))
         print(rgb_len("green", "导入的txt文件，一行一个内容，注意，空的换行也会算进去"))
         choujiang.cj_main()
+    if pages == "chat":
+        clear_console()
+        print(rgb_len("green", "选择属于你的启动方式："))
+        print(rgb_len("green", "1.基于hshmeng_tools启动"))
+        print(rgb_len("green", "2.不基于hshmeng_tools启动（不可使用）"))
     if pages == "李猛烧香":
         if if_caidan == 1 == 1:
             for _ in range(3):
