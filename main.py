@@ -1,4 +1,4 @@
-import ctypes
+import threading
 import keyboard
 import pygetwindow as gw
 import win32gui
@@ -6,6 +6,7 @@ import win32con
 from exes import *
 from exe import page
 from exe import choujiang
+from chat import chat_main
 
 if_caidan = 0
 
@@ -127,8 +128,6 @@ def main():
 
     ys()
     if pages == "exit":
-        clear_console()
-        print(random_jump("我们正在入侵你的电脑！！！\n感受恐惧吧！！！"))
         exit()
     if pages == "author":
         clear_console()
@@ -150,12 +149,14 @@ def main():
         clear_console()
         print(rgb_len("green", "抽奖转盘用法："))
         print(rgb_len("green", "导入的txt文件，一行一个内容，注意，空的换行也会算进去"))
-        choujiang.cj_main()
+        choujiang_xiancheng = threading.Thread(target=choujiang.cj_main(), args=("Thread-1", 1))
+        choujiang_xiancheng.start()
     if pages == "chat":
         clear_console()
         print(rgb_len("green", "选择属于你的启动方式："))
         print(rgb_len("green", "1.基于hshmeng_tools启动"))
         print(rgb_len("green", "2.不基于hshmeng_tools启动（不可使用）"))
+        chat_main.the_main()
     if pages == "李猛烧香":
         if if_caidan == 1 == 1:
             for _ in range(3):
@@ -168,3 +169,4 @@ while True:
 
 
 # pyinstaller -F -i qiqi.ico main.py
+# .venv\Scripts\activate
