@@ -156,7 +156,7 @@ def main():
         print(rgb_len("green", "选择属于你的启动方式："))
         print(rgb_len("green", "1.基于hshmeng_tools启动"))
         print(rgb_len("green", "2.不基于hshmeng_tools启动（不可使用）"))
-        chat_main.the_main()
+        chat_main.main()
     if pages == "李猛烧香":
         if if_caidan == 1 == 1:
             for _ in range(3):
@@ -168,5 +168,5 @@ while True:
     main()
 
 
-# pyinstaller -F -i qiqi.ico main.py
+# pyinstaller -F -i qiqi.ico chat_main.py
 # .venv\Scripts\activate
