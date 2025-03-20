@@ -99,8 +99,9 @@ c = input(rgb(255, 0, 0, "键入回车进入程序>>>"))
 
 print("""=====公告=====
 原先的字体色彩过于丰富，不便于整理，故取消过于丰富的颜色
-v8.0更新内容
-1.添加了聊天功能
+v8.0 更新公告：
+1.优化代码
+2.更新新功能（CHAT聊天，这是一个单独功能，不会基于hshmeng_tools运行，但会有联动）
 """)
 
 def main():
@@ -126,6 +127,8 @@ def main():
 
     ys()
     if pages == "exit":
+        clear_console()
+        print(random_jump("我们正在入侵你的电脑！！！\n感受恐惧吧！！！"))
         exit()
     if pages == "author":
         clear_console()
