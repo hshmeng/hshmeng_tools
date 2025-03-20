@@ -128,6 +128,7 @@ class LotteryWheel:
 
 def cj_main():
     root = tk.Tk()
+    root.iconbitmap('..\\qiqi.ico')
     app = LotteryWheel(root)
     root.mainloop()
 
