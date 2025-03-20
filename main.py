@@ -167,5 +167,5 @@ while True:
     main()
 
 
-# pyinstaller -F -i qiqi.ico chat_main.py
+# pyinstaller -F -i qiqi.ico main.py
 # .venv\Scripts\activate
