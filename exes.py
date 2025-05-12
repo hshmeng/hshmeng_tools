@@ -7,6 +7,7 @@ from tqdm import tqdm
 import platform, psutil, subprocess
 from all import *
 from exe import jiyu, filess
+from exe.filess import qiqi_put_pp
 
 
 # def ma_1():

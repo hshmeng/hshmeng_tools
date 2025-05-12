@@ -6,6 +6,8 @@ from exes import *
 from exe import page
 from exe import choujiang
 import chat_main
+import warnings
+warnings.filterwarnings("ignore")  # 忽略所有警告
 
 if_caidan = 0
 
@@ -90,18 +92,15 @@ def close_windows_in_thread():
 thread = threading.Thread(target=close_windows_in_thread)
 thread.start()
 
-# 刷新颜色
-print(rgb(255, 0, 0, "键入回车进入程序>>>"))
-clear_console()
-c = input(rgb(255, 0, 0, "键入回车进入程序>>>"))
-
 # ma_1()
+clear_console()
 
 print("""=====公告=====
 原先的字体色彩过于丰富，不便于整理，故取消过于丰富的颜色
-v8.0 更新公告：
+v8.0.1 更新公告：
 1.优化代码
 2.更新新功能（CHAT聊天，这是一个单独功能，可以不基于hshmeng_tools运行，但会与hshmeng_tools有联动）
+3.修复抽奖功能bug和菜单bug
 """)
 
 def main():

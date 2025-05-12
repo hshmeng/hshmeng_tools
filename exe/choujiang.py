@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, simpledialog
 import math
 
-
 class LotteryWheel:
     def __init__(self, root):
         self.root = root
@@ -128,7 +127,6 @@ class LotteryWheel:
 
 def cj_main():
     root = tk.Tk()
-    root.iconbitmap('..\\qiqi.ico')
     app = LotteryWheel(root)
     root.mainloop()
 
