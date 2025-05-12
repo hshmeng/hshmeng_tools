@@ -7,6 +7,7 @@ from exe import page
 from exe import choujiang
 import chat_main
 import warnings
+import exe.gameplay
 warnings.filterwarnings("ignore")  # 忽略所有警告
 
 if_caidan = 0
@@ -97,10 +98,8 @@ clear_console()
 
 print("""=====公告=====
 原先的字体色彩过于丰富，不便于整理，故取消过于丰富的颜色
-v8.1 更新公告：
-1.优化代码
-2.更新新功能（CHAT聊天，这是一个单独功能，可以不基于hshmeng_tools运行，但会与hshmeng_tools有联动）
-3.修复抽奖功能bug和彩蛋bug
+v8.2 更新公告：
+1.更新内置小游戏
 """)
 
 def main():
@@ -155,6 +154,16 @@ def main():
         print(rgb_len("green", "1.基于hshmeng_tools启动"))
         print(rgb_len("green", "2.不基于hshmeng_tools启动（不可使用）"))
         chat_main.main()
+    if pages == "game":
+        clear_console()
+        print(rgb_len("green", "游戏如下："))
+        print(rgb_len("green", "1.猜数字"))
+        print(rgb_len("green", "2.数字位置猜谜游戏"))
+        a = input("输入选项>>>")
+        if a == "1":
+            exe.gameplay.guess_number_game()
+        elif a == "2":
+            exe.gameplay.number_position_game()
     if pages == "李猛烧香":
         if if_caidan == 1 == 1:
             for _ in range(3):
