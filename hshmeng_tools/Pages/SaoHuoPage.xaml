@@ -1,0 +1,107 @@
+﻿<Page x:Class="hshmeng_tools.Pages.SaoHuoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="#F3F3F3">
+
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#afb8b7"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#495251"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#000000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="20">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="False">
+            <StackPanel>
+                <!-- 局域网存活扫描折叠面板 -->
+                <Border Background="White" CornerRadius="10" Padding="24" Margin="0,0,0,24">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock Text="局域网存活" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <TextBlock Text="扫描指定IP地址网段存活主机" FontSize="13" Foreground="#888"/>
+                            </StackPanel>
+                            <Button Grid.Column="1" Content="启动" Click="LanScanButton_Click"/>
+                        </Grid>
+                        <StackPanel x:Name="LanScanPanel" Visibility="Collapsed" Margin="0,12,0,0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <TextBox x:Name="IpTextBox" Width="150" Margin="0,0,8,0"/>
+                                <TextBox x:Name="SubnetTextBox" Width="100" Margin="0,0,8,0"/>
+                                <Button Content="开始扫描" Click="StartLanScan_Click"/>
+                            </StackPanel>
+                            <TextBox x:Name="LanOutputTextBox" Height="200" VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                
+                <!-- 扫描指定IP地址开放端口 -->
+                <Border Background="White" CornerRadius="10" Padding="24" Margin="0,0,0,24">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock Text="指定IP开放端口" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <TextBlock Text="扫描指定IP地址开放的所有端口" FontSize="13" Foreground="#888"/>
+                            </StackPanel>
+                            <Button Grid.Column="1" Content="启动" Click="PortScanButton_Click"/>
+                        </Grid>
+                        <StackPanel x:Name="PortScanPanel" Visibility="Collapsed" Margin="0,12,0,0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <TextBox x:Name="PortIpTextBox" Width="150" Margin="0,0,8,0"/>
+                                <Button Content="开始扫描" Click="StartPortScan_Click"/>
+                            </StackPanel>
+                            <TextBox x:Name="PortOutputTextBox" Height="200" VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                
+                <!-- 常见端口作用及其服务内容 -->
+                <Border Background="White" CornerRadius="10" Padding="24" Margin="0,0,0,24">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="常见端口作用" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <TextBlock Text="常见端口作用及其服务内容" FontSize="13" Foreground="#888"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Content="查看" Click="CommonPortsButton_Click"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

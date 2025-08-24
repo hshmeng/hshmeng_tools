@@ -1,0 +1,14 @@
+﻿<Page x:Class="hshmeng_tools.Pages.GongXiangPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="#F3F3F3">
+
+    <Grid Margin="20">
+        <Border Background="White" CornerRadius="10" Padding="20">
+            <StackPanel>
+                <TextBlock Text="共享操作" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+                <TextBlock Text="没写呢，谢谢" FontSize="16"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

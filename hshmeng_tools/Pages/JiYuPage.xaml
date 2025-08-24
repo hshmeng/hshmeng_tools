@@ -1,0 +1,105 @@
+﻿<Page x:Class="hshmeng_tools.Pages.JiYuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="#F3F3F3">
+    
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#afb8b7"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#495251"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#000000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    
+    <Grid Margin="20">
+        <ScrollViewer VerticalScrollBarVisibility="Auto"  CanContentScroll="False">
+            <StackPanel>
+                <!-- 极域电子教室工具 -->
+                <Border Background="White" CornerRadius="10" Padding="24" Margin="0,0,0,24">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="极域电子教室工具" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <TextBlock Text="启动 极域电子教室工具 软件" FontSize="13" Foreground="#888"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Content="启动" Click="StartJiYuButton_Click"/>
+                    </Grid>
+                </Border>
+
+                <!-- 极域电子教室工具快捷键教学 -->
+                <Border Background="White" CornerRadius="10" Padding="24" Margin="0,0,0,24">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="极域电子教室工具快捷键教学" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <TextBlock Text="Ctrl + Alt + F: 紧急全屏快捷键" FontSize="13" Foreground="#888"/>
+                            <TextBlock Text="Ctrl + Alt + D: 快速显示/隐藏窗口快捷键" FontSize="13" Foreground="#888"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Content="查看" Click="HotkeysButton_Click"/>
+                    </Grid>
+                </Border>
+
+                <!-- 极域电子教室一键杀死 -->
+                <Border Background="White" CornerRadius="10" Padding="24" Margin="0,0,0,24">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="极域电子教室一键杀死" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <TextBlock Text="启动 TK极域.bat 工具" FontSize="13" Foreground="#888"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Content="一键杀死" Click="KillButton_Click"/>
+                    </Grid>
+                </Border>
+                
+                <!-- 创建 TK极域 文件 -->
+                <Border Background="White" CornerRadius="10" Padding="24" Margin="0,0,0,24">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock Text="创建 TK.bat 文件在电脑上" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <TextBlock Text="默认首先尝试C盘根目录，失败尝试D盘根目录" FontSize="13" Foreground="#888"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Content="创建" Click="CreateTKBatButton_Click"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
