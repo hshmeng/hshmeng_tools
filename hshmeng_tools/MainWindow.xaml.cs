@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace hshmeng_tools
 {
@@ -24,6 +23,9 @@ namespace hshmeng_tools
                         break;
                     case "扫活工具":
                         MainFrame.Navigate(new Pages.SaoHuoPage());
+                        break;
+                    case "共享操作":
+                        MainFrame.Navigate(new Pages.GongXiangPage());
                         break;
                     case "帮助":
                         MainFrame.Navigate(new Pages.HelpPage());

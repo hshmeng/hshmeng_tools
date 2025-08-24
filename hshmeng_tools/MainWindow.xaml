@@ -5,6 +5,7 @@
         WindowStartupLocation="CenterScreen"
         Background="#F3F3F3"
         FontFamily="Segoe UI"
+        Icon="Assets/logo.ico"
         WindowStyle="None"
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
 
