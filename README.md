@@ -1,4 +1,4 @@
-# 欢迎大家提交Issues，或者Pull Request，我会及时回复！
+# 欢迎大家提交Issues，或者Pull Request，我不会及时回复！
 
 # 新C#版本大全
 |    版本号     |详细信息|      直接下载      |
